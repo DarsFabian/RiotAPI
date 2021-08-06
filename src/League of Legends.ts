@@ -2,6 +2,7 @@ import { RiotClient } from "./BaseClient";
 import axios, { AxiosResponse } from "axios";
 import { Summoner } from "./typings/ISummoner";
 import { Match } from "./typings/IMatch";
+import { MatchInfo } from ".";
 
 class LeagueClient extends RiotClient {
 
@@ -77,6 +78,30 @@ class LeagueClient extends RiotClient {
     for(let i = 0; i < this.servers_v5.length; i++) {
       const response: AxiosResponse = await axios.get(`https://${this.servers_v5[i]}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?/start=${startIndex}&count=${count}&api_key=${this.token}`);
       if(response.status == 200) return response.data as Array<Match>;
+    }
+    return null;
+  }
+
+  /**
+   * Fetches a match' stats using its id. If it doesn't get any it'll return null.
+   * <b> Prefer providing a server parameter as the function will automatically try to get a valid '200 OK' reponse by querying each server if you don't. </b>
+   * @param matchId the match's id.
+   * @param server server to query (null by default).
+   * @returns Instance of {@link MatchInfo}
+   */
+  async getMatchStats(matchId: string, server: string = null): Promise<MatchInfo | null> {
+    matchId = matchId.trim();
+
+    if(matchId == "" || matchId == null) throw Error("matchId cannot be empty or null!");
+
+    if(server != null) {
+      const response: AxiosResponse = await axios.get(`https://${server}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${this.token}`);
+      if(response.status == 200) return response.data as MatchInfo;
+    }
+
+    for(let i = 0; i < this.servers_v5.length; i++) {
+      const response: AxiosResponse = await axios.get(`https://${this.servers_v5[i]}.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${this.token}`);
+      if(response.status == 200) return response.data as MatchInfo;
     }
     return null;
   }
