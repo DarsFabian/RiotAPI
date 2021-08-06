@@ -7,6 +7,8 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "target": "ES5",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
 
     "declaration": true,
     "removeComments": true,
