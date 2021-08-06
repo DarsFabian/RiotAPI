@@ -1,0 +1,29 @@
+{
+  "name": "RiotAPI",
+  "version": "0.1.0",
+  "description": "A simple NodeJS module to interact with Riot's API.",
+  "main": "lib/index.js",
+  "author": "Fabian",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn node lib/index.js",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.12",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "babel-jest": "^27.0.6",
+    "eslint": "^7.32.0",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
+}
